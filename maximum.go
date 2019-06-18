@@ -2,10 +2,8 @@ package search_maximum
 
 import (
 	"errors"
-	"fmt"
 	"reflect"
 	"sort"
-	"strings"
 )
 
 const countTypesInOneSlice = 1
@@ -39,11 +37,7 @@ func comparator(sl []interface{}, less func(i, j int) bool) interface{} {
 		newSlice = reflect.Append(newSlice, reflect.ValueOf(v))
 	}
 	sort.SliceStable(newSlice.Interface(), less)
+	item := newSlice.Index(newSlice.Len() - 1)
 
-	str := fmt.Sprintf("%v", newSlice.Interface())
-	str = strings.TrimLeft(str, "[")
-	str = strings.TrimRight(str, "]")
-	newSl := strings.Split(str, " ")
-
-	return newSl[len(newSl)-1]
+	return item.Interface()
 }
